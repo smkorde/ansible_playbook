@@ -1,0 +1,41 @@
+- hosts: localhost
+  tasks:
+  - name: Install a yum package - java, git and maven,jenkins
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - java-1.8.0-openjdk
+    - git
+    - maven
+    - jenkins
+- hosts: artifactory
+  remote_user: ec2-user
+  become: true
+  tasks:
+  - name: Install a yum package - java, sonar
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - java-1.8.0-openjdk
+    - https://bintray.com/jfrog/artifactory-rpms/download_file?file_path=jfrog-artifactory-oss-4.12.2.rpm
+  - name: Start service jfrog artifactory, if not started
+    service:
+      name: artifactory
+      state: started
+- hosts: sonar
+  remote_user: ec2-user
+  become: true
+  tasks:
+  - name: Install a yum package - java, sonar
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - java-1.8.0-openjdk
+    - https://sourceforge.net/projects/sonar-pkg/files/rpm/noarch/sonar-4.5-1.noarch.rpm
+  - name: Start service sonar, if not started
+    service:
+      name: sonar
+      state: started

@@ -1,0 +1,16 @@
+- hosts: sonar
+  remote_user: root
+  become: true
+  tasks:
+  - name: Install a yum package - java, sonar
+    yum:
+      name: "{{ item }}"
+      state: present
+    with_items:
+    - java-1.8.0-openjdk
+    - https://sourceforge.net/projects/sonar-pkg/files/rpm/noarch/sonar-4.5-1.noarch.rpm
+  - name: Start service sonar, if not started
+    service:
+      name: sonar
+      state: started
+
