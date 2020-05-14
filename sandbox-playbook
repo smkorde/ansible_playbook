@@ -10,8 +10,8 @@
   tasks:
     - name: Launch instance
       ec2:
-         aws_access_key: AKIAIBHU6A7DVTIE2CMA
-         aws_secret_key: 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
+         aws_access_key: XXX
+         aws_secret_key: XXXX
          key_name: "{{ keypair }}"
          group: "{{ security_group }}"
          instance_type: "{{ instance_type }}"
