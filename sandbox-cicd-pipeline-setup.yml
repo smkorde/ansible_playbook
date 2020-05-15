@@ -38,7 +38,7 @@
   remote_user: ec2-user
   become: true
   tasks:
-  - name: Install a yum package - java, sonar
+  - name: Install a yum package - java, jfrog
     yum:
       name: "{{ item }}"
       state: present
